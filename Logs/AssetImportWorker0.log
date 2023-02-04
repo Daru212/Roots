@@ -2699,6 +2699,7 @@ Domain Reload Profiling:
 Platform modules already initialized, skipping
 Refreshing native plugins compatible for Editor in 7.00 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 4094 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 26 unused Assets / (32.5 KB). Loaded Objects now: 4681.
 Memory consumption went from 0.63 GB to 0.63 GB.
 Total: 6.482800 ms (FindLiveObjects: 0.410900 ms CreateObjectMapping: 0.474100 ms MarkObjects: 5.537700 ms  DeleteObjects: 0.058900 ms)
