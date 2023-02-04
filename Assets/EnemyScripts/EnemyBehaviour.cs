@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.UI;
 
 public class EnemyBehaviour : MonoBehaviour
 {
+    public PlayerBehaviour _player;
+    public Image Healthbar;
+
     public Transform target;
 
     public float speed = 200f;
-    public float nextWaypointDistance = 3f;
+    public float nextWaypointDistance;
 
     public Transform enemyGFX;
 
@@ -22,6 +26,10 @@ public class EnemyBehaviour : MonoBehaviour
     //Combat
     public int maxHealth = 100;
     int _currentHealth;
+
+    public float attackRate = 2f;
+    float _nextAttackTime = 0f;
+    public int damage = 25;
 
     // Start is called before the first frame update
     void Start()
@@ -95,11 +103,34 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    void Attack()
+    {
+        //Play attack animation
+
+        //Deal damage
+        _player.GetComponent<PlayerBehaviour>().TakeDamage(damage);
+        Debug.Log("-" + damage);
+    }
+
     void Die()
     {
         Debug.Log("Enemy Died");
+        Destroy(gameObject);
         //Die animation
 
         //Disable the enemy
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            if (Time.time >= _nextAttackTime)
+            {
+                    Debug.Log("Enemy Swings");
+                    Attack();
+                    _nextAttackTime = Time.time + 1f / attackRate;
+            }
+        }
     }
 }

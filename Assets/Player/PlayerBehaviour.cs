@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -8,19 +9,28 @@ public class PlayerBehaviour : MonoBehaviour
     public float runSpeed = 30f;
     Vector2 _move;
     Rigidbody2D _rb;
-    public float health = 100f;
 
     //Combat
     public Animator animator;
 
     public Transform attackPoint;
-    public float attackRange = 0.5f;
     public LayerMask enemyLayers;
+
+    public float attackRange = 0.5f;
+    public int attackDamage = 40;
+    public float attackRate = 2f;
+    float _nextAttackTime = 0f;
+
+    public int maxHealth = 100;
+    public int _currentHealth;
+
+    public Image HealthBar;
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -28,10 +38,14 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        if (Input.GetMouseButtonDown(0))
+        if (Time.time >= _nextAttackTime)
         {
-            Debug.Log("Leftclick");
-            Attack();
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Leftclick");
+                Attack();
+                _nextAttackTime = Time.time + 1f / attackRate;
+            }
         }
     }
 
@@ -51,7 +65,32 @@ public class PlayerBehaviour : MonoBehaviour
         foreach(Collider2D enemy in hitEnemies)
         {
             Debug.Log("We hit " + enemy.name);
+            enemy.GetComponent<EnemyBehaviour>().TakeDamage(attackDamage);
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _currentHealth -= damage;
+        HealthBar.fillAmount = _currentHealth / 10;
+        Debug.Log(_currentHealth);
+        Debug.Log(HealthBar.fillAmount);
+
+        //Play hurt animation
+
+        if (_currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Died");
+        Destroy(gameObject);
+        //Die animation
+
+        //Disable the enemy
     }
 
     private void OnDrawGizmosSelected()
