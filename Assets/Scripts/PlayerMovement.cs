@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -63,6 +64,10 @@ public class PlayerMovement : MonoBehaviour
             }                    
            
         }
+
+       
+
+
         if (rb2d.velocity.y < -0.01f) {
             anim.SetTrigger("falling");
         }
@@ -75,10 +80,12 @@ public class PlayerMovement : MonoBehaviour
         IEnumerator jumpdelay() 
         {
             jumping = true;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.01f);
             jumping = false;
         }
 
+        
+       
      
 
     }

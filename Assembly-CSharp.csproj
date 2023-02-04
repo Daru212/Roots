@@ -59,6 +59,7 @@
     <Compile Include="Assets\PlayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\MovablePlatformController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
