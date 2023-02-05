@@ -23,11 +23,6 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         isGrounded = false;
-
-    }
-
-    private void Update()
-    {
         
     }
 
@@ -60,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
                 rb2d.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
                 //anim.SetTrigger("jump");
                 StartCoroutine(jumpdelay());//delays ability to jump
-                StartCoroutine(jumpdelay());
+                
             }                    
            
         }
@@ -89,10 +84,17 @@ public class PlayerMovement : MonoBehaviour
      
 
     }
-
-
-
-
+    //collectable logic
+    private void OnCollisionEnter2D(Collision2D otherobject)
+    {
+       
+        if (otherobject.gameObject.CompareTag("Collectable"))
+        {
+            Destroy(otherobject.gameObject);
+            print("PICKUP");
+        }
+       
+    }
 
 
 
