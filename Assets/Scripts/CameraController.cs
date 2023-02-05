@@ -1,4 +1,6 @@
 
+using System.Collections.Specialized;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -6,6 +8,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private float aheadDistance;
     [SerializeField] private float cameraSpeed;
+    public Transform cameraRef;
 
     private float lookAhead;
 
@@ -18,6 +21,10 @@ public class CameraController : MonoBehaviour
         transform.position = new Vector3 (player.position.x + lookAhead, transform.position.y, transform.position.z);
 
         // calaculates camera delay
-        lookAhead = Mathf.Lerp(lookAhead, (aheadDistance * player.localScale.x), Time.deltaTime * cameraSpeed);
+       lookAhead = Mathf.Lerp(lookAhead, (aheadDistance * player.localScale.x), Time.deltaTime * cameraSpeed);
+    }
+    public void Respawn()
+    {
+        transform.position = cameraRef.transform.position;
     }
 }
