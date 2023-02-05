@@ -23,14 +23,14 @@ public class PlayerBehaviour : MonoBehaviour
 
     public int maxHealth = 100;
     public int _currentHealth;
-
-    public Image HealthBar;
+    public HealthBar healthBar;
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -72,9 +72,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
-        HealthBar.fillAmount = _currentHealth / 10;
-        Debug.Log(_currentHealth);
-        Debug.Log(HealthBar.fillAmount);
+        healthBar.SetHealth(_currentHealth);
 
         //Play hurt animation
 
